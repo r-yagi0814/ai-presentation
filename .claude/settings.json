@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import sys, json; data = json.load(sys.stdin); fp = data.get('tool_input', {}).get('file_path', ''); r = {'systemMessage': '[RULE] ai_generation_presentation.md が修正されました。次のステップ: ユーザーに HTML ファイルの更新要否を確認してください。', 'hookSpecificOutput': {'hookEventName': 'PostToolUse', 'additionalContext': 'RULE（必須）: ai_generation_presentation.md の修正が完了した。次に必ずユーザーへ「html/ai_generation_slides.html も更新しますか？」と確認すること。YES の場合のみ HTML を更新し、NO の場合は更新しないこと。'}}; print(json.dumps(r)) if 'ai_generation_presentation.md' in fp else None\"",
+            "statusMessage": "MDファイルの変更を検出中..."
+          }
+        ]
+      }
+    ]
+  }
+}

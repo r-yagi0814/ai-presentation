@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIエージェント入門 ─ AIチャットの次を知る</title>
+<link rel="stylesheet" href="css/ai_beginner_guide.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="slides-wrapper">
+
+  <!-- ① タイトル -->
+  <div class="slide slide-title active" id="slide-1">
+    <div class="main-title">AIエージェント入門</div>
+    <div class="subtitle">AIチャットの次を知る</div>
+    <div class="tag">2026 ／ AI教育資料</div>
+  </div>
+
+  <!-- ② 目次 -->
+  <div class="slide slide-content accent-blue" id="slide-2">
+    <div class="slide-header">
+      <div class="section-label">Index</div>
+      <h2><span class="icon">📋</span>目次</h2>
+    </div>
+    <div class="toc-grid">
+      <div class="toc-item" onclick="goTo(3)"><span class="toc-num">01</span><span class="toc-label">はじめに</span></div>
+      <div class="toc-item" onclick="goTo(4)"><span class="toc-num">02</span><span class="toc-label">おさらい：AIチャットとは</span></div>
+      <div class="toc-item" onclick="goTo(5)"><span class="toc-num">03</span><span class="toc-label">AIチャットの限界</span></div>
+      <div class="toc-item" onclick="goTo(6)"><span class="toc-num">04</span><span class="toc-label">AIエージェントとは</span></div>
+      <div class="toc-item" onclick="goTo(7)"><span class="toc-num">05</span><span class="toc-label">AIチャットとAIエージェントの違い</span></div>
+      <div class="toc-item" onclick="goTo(8)"><span class="toc-num">06</span><span class="toc-label">AIエージェントでできること</span></div>
+      <div class="toc-item" onclick="goTo(9)"><span class="toc-num">07</span><span class="toc-label">代表的なAIエージェントツール</span></div>
+      <div class="toc-item" onclick="goTo(10)"><span class="toc-num">08</span><span class="toc-label">AIエージェントが変える働き方</span></div>
+      <div class="toc-item" onclick="goTo(11)"><span class="toc-num">09</span><span class="toc-label">業務で使う前に知っておきたい注意点</span></div>
+      <div class="toc-item" onclick="goTo(12)"><span class="toc-num">10</span><span class="toc-label">GitHub Copilotを業務で使う前に把握しておきたいこと</span></div>
+      <div class="toc-item" onclick="goTo(13)"><span class="toc-num">11</span><span class="toc-label">もう一歩進んだ概念：ルールとスキル</span></div>
+      <div class="toc-item" onclick="goTo(14)"><span class="toc-num">12</span><span class="toc-label">まとめ</span></div>
+      <div class="toc-item" onclick="goTo(15)"><span class="toc-num">13</span><span class="toc-label">参考資料</span></div>
+    </div>
+  </div>
+
+  <!-- ③ はじめに -->
+  <div class="slide slide-content accent-teal" id="slide-3">
+    <div class="slide-header">
+      <div class="section-label">01 ─ Introduction</div>
+      <h2><span class="icon">👋</span>はじめに</h2>
+    </div>
+    <div class="content-body">
+      <div class="two-col">
+        <div class="card">
+          <h3>この資料の目的</h3>
+          <ul>
+            <li>「AIチャットは使ったことがあるけど、AIエージェントは何が違うのかよくわからない」を解消する</li>
+            <li>AIエージェントが今後の業務にどう関わってくるかを、専門用語なしでイメージできるようにする</li>
+            <li>実際に使い始める前に知っておくべき注意点を整理する</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>対象者</h3>
+          <ul>
+            <li>ChatGPTやCopilotなどのAIチャットを使ったことがある方</li>
+            <li>「AIエージェント」という言葉は聞いたことがあるが、詳しくは知らない方</li>
+            <li>今後、業務でAIエージェントを使う可能性がある方</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ おさらい：AIチャットとは -->
+  <div class="slide slide-content accent-green" id="slide-4">
+    <div class="slide-header">
+      <div class="section-label">02 ─ Recap</div>
+      <h2><span class="icon">💬</span>おさらい：AIチャットとは</h2>
+    </div>
+    <div class="content-body">
+      <div class="highlight-box green">
+        人がメッセージ（プロンプト）を送り、AIが1回の返信で応答する対話形式。<br>
+        例：「この文章を要約して」「会議の議事録をまとめて」「アイデアを5つ出して」
+      </div>
+      <div class="card">
+        <h3>特徴</h3>
+        <ul>
+          <li><strong style="color:#269e6c;">1問1答が基本</strong>：質問して答えが返ってくる。次に進むには人が次の指示を出す必要がある</li>
+          <li><strong style="color:#269e6c;">会話の外に出られない</strong>：ファイルを開いたり、ツールを操作したりはせず、テキストのやり取りの中で完結する</li>
+          <li><strong style="color:#269e6c;">すべての判断・実行は人が行う</strong>：AIは提案するだけで、実際の作業（送信・保存・実行）は人がやる</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ AIチャットの限界 -->
+  <div class="slide slide-content accent-orange" id="slide-5">
+    <div class="slide-header">
+      <div class="section-label">03 ─ Limitations</div>
+      <h2><span class="icon">🚧</span>AIチャットの限界</h2>
+    </div>
+    <div class="content-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>課題</th><th>具体例</th></tr></thead>
+          <tbody>
+            <tr><td><strong>一度にできることが1ステップ分</strong></td><td>「調べて→まとめて→資料化して」を毎回指示し直す必要がある</td></tr>
+            <tr><td><strong>会話の外の作業ができない</strong></td><td>ファイル操作・ツール実行・Web検索などは基本的にできない（機能拡張がない場合）</td></tr>
+            <tr><td><strong>前提を毎回説明しがち</strong></td><td>会話が長くなると文脈を見失うことがある</td></tr>
+            <tr><td><strong>実行は人任せ</strong></td><td>AIが「こうすればいいですよ」と教えてくれても、実際に手を動かすのは人</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight-box">
+        💡 AIチャットは「優秀な相談相手」。実際に手足を動かして仕事を進めるのは人間側の役割だった
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ AIエージェントとは -->
+  <div class="slide slide-content accent-purple" id="slide-6">
+    <div class="slide-header">
+      <div class="section-label">04 ─ What is an AI Agent</div>
+      <h2><span class="icon">🤖</span>AIエージェントとは</h2>
+    </div>
+    <div class="content-body">
+      <div class="highlight-box" style="background:#f2e9ff;border-left-color:#b28dff;color:#6b3fa0;">
+        与えられた目的（ゴール）に対して、AIが<strong>自分で計画を立て、複数ステップを自律的に実行する</strong>仕組み。<br>
+        単に質問に答えるのではなく、必要なツール（ファイル操作・コード実行・Web検索など）を<strong>自分で選んで使う</strong>。<br>
+        人は最初に目的を伝えたら、あとは経過を確認しながら、必要なときだけ介入する。
+      </div>
+      <div style="font-size:.8rem;color:#9a5fe0;margin-bottom:4px;font-weight:600;">イメージで理解する</div>
+      <div class="code-block">
+        <div class="code-row"><span class="label">AIチャット　　　</span><span class="arrow"> </span><span class="tool">質問する → 1回答える → （次は人が指示）</span></div>
+        <div class="code-row"><span class="label">AIエージェント　</span><span class="arrow"> </span><span class="tool">目的を伝える → 計画する → 実行する → 確認する → 必要なら修正する → 完了</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 違い -->
+  <div class="slide slide-content accent-blue" id="slide-7">
+    <div class="slide-header">
+      <div class="section-label">05 ─ Chat vs Agent</div>
+      <h2><span class="icon">⚖️</span>AIチャットとAIエージェントの違い</h2>
+    </div>
+    <div class="content-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>観点</th><th>AIチャット</th><th>AIエージェント</th></tr></thead>
+          <tbody>
+            <tr><td><strong>やり取りの単位</strong></td><td>1問1答</td><td>目的達成までの一連のタスク</td></tr>
+            <tr><td><strong>実行主体</strong></td><td>提案のみ、実行は人</td><td>計画・実行までAIが行う</td></tr>
+            <tr><td><strong>ツールの利用</strong></td><td>基本的になし</td><td>ファイル操作・コード実行・検索などを自律的に使用</td></tr>
+            <tr><td><strong>継続性</strong></td><td>会話ごとにリセットされやすい</td><td>目的に向かって複数ステップを継続的に遂行</td></tr>
+            <tr><td><strong>人の役割</strong></td><td>都度指示を出す</td><td>目的を設定し、結果をレビュー・承認する</td></tr>
+            <tr><td><strong>代表例</strong></td><td>ChatGPT（Web版）、Copilot（Web版）</td><td>Claude Code、Cursor（Agentモード）、Devin</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ できること -->
+  <div class="slide slide-content accent-teal" id="slide-8">
+    <div class="slide-header">
+      <div class="section-label">06 ─ What Agents Can Do</div>
+      <h2><span class="icon">🛠️</span>AIエージェントでできること</h2>
+    </div>
+    <div class="content-body">
+      <div class="two-col">
+        <div class="card">
+          <h3>具体例</h3>
+          <ul>
+            <li>コードを書き、実行し、エラーが出たら自分で修正する（ソフトウェア開発）</li>
+            <li>複数のファイルを横断して調査し、レポートとしてまとめる</li>
+            <li>与えられたタスクを小さいステップに分解し、順番に実行する</li>
+            <li>作業の途中経過を人に報告し、判断が必要な場面だけ確認を取る</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>AIチャットとの組み合わせ方</h3>
+          <ul>
+            <li>ちょっとした質問・アイデア出し → <strong style="color:#14a89a;">AIチャット</strong>で十分</li>
+            <li>複数ステップにまたがる作業・繰り返し発生する定型業務 → <strong style="color:#14a89a;">AIエージェント</strong>が向いている</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑨ 代表的なツール -->
+  <div class="slide slide-content accent-indigo" id="slide-9">
+    <div class="slide-header">
+      <div class="section-label">07 ─ Agent Tools</div>
+      <h2><span class="icon">🧰</span>代表的なAIエージェントツール</h2>
+    </div>
+    <div class="content-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>ツール</th><th>概要</th><th>主な用途</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Claude Code</strong></td><td>CLI（コマンドライン）で動くAnthropic製の開発エージェント</td><td>コーディング・ファイル操作・自動化タスク</td></tr>
+            <tr><td><strong>Cursor（Agentモード）</strong></td><td>AIペアプログラマーとして動作するエディタ</td><td>コードベース全体の編集・リファクタリング</td></tr>
+            <tr><td><strong>Devin</strong></td><td>自律的にコードを書き・テストし・修正するAIエンジニア</td><td>ソフトウェア開発の自動化</td></tr>
+            <tr><td><strong>GitHub Copilot（Agent機能）</strong></td><td>コード補完に加え、複数ファイルにまたがる変更を自律実行</td><td>開発支援</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight-box" style="border-left-color:#8f9dff;background:#eceeff;color:#4a4faf;">
+        💡 現時点ではコーディング領域での活用が先行しているが、今後は資料作成・データ分析・業務システム操作など、他領域への広がりが見込まれている
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑩ 働き方の変化 -->
+  <div class="slide slide-content accent-green" id="slide-10">
+    <div class="slide-header">
+      <div class="section-label">08 ─ How Work Changes</div>
+      <h2><span class="icon">🔄</span>AIエージェントが変える働き方</h2>
+    </div>
+    <div class="content-body">
+      <div class="numbered-list">
+        <div class="numbered-item">
+          <div class="num-badge">1</div>
+          <p>「指示する」から「目的を伝える」へ：細かい手順ではなく、達成したいゴールを伝える形にシフトする</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">2</div>
+          <p>人の役割はレビュー・承認へ：すべてを自分でやるのではなく、AIの成果物を確認し、方向修正する役割が増える</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">3</div>
+          <p>繰り返し作業からの解放：定型的な調査・整理・下書き作成などをAIエージェントに任せられる</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">4</div>
+          <p>スピードと責任のバランス：速く進む分、最終的な判断・責任は引き続き人が持つ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑪ 注意点 -->
+  <div class="slide slide-content accent-red" id="slide-11">
+    <div class="slide-header">
+      <div class="section-label">09 ─ Things to Know</div>
+      <h2><span class="icon">⚠️</span>業務で使う前に知っておきたい注意点</h2>
+    </div>
+    <div class="content-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>注意点</th><th>内容</th><th>対策</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ハルシネーション</strong></td><td>AIが自信満々に誤った情報を出すことがある</td><td>重要な内容は必ずファクトチェックする</td></tr>
+            <tr><td><strong>権限の与えすぎ</strong></td><td>ファイル削除・外部送信など、影響範囲の大きい操作を無制限に許可しない</td><td>実行範囲・権限を最小限に設定する</td></tr>
+            <tr><td><strong>情報漏洩</strong></td><td>社外秘の情報をそのまま入力しない</td><td>会社のガイドラインに従い、入力してよい情報を確認する</td></tr>
+            <tr><td><strong>ブラックボックス化</strong></td><td>「AIが全部やってくれる」に頼りすぎると、内容を理解しないまま進んでしまう</td><td>節目ごとに成果物を確認し、内容を把握する習慣を持つ</td></tr>
+            <tr><td><strong>破壊的な操作</strong></td><td>元に戻せない操作（削除・上書き・送信など）を自動で実行してしまう</td><td>重要な操作の前には必ず確認を挟む設定にする</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight-box" style="border-left-color:#ff8a8a;background:#ffeef0;color:#c5455a;">
+        💡 AIエージェントは強力な分、「任せきりにしない」姿勢が今まで以上に大切になる
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑫ GitHub Copilot -->
+  <div class="slide slide-content accent-orange" id="slide-12">
+    <div class="slide-header">
+      <div class="section-label">10 ─ GitHub Copilot at Work</div>
+      <h2><span class="icon">🐙</span>GitHub Copilotを業務で使う前に把握しておきたいこと</h2>
+    </div>
+    <div class="content-body">
+      <div class="card">
+        <h3>Copilotの特色</h3>
+        <ul>
+          <li>普段使っているIDE（VS Code、JetBrains、Visual Studioなど）にプラグインとして導入できる。新しいツールに乗り換える必要がない</li>
+          <li>リポジトリ全体のコードを踏まえた提案を行う（コードベースの文脈を理解した補完）</li>
+          <li>コード補完（Completions）→ Chat → Agentモードと、段階的に自律性の高い機能が用意されている</li>
+          <li>GitHubのエコシステム（Issue・Pull Request・Actionsなど）と連携し、開発フロー全体をカバーできる</li>
+        </ul>
+      </div>
+      <div style="font-size:.8rem;color:#e08a1c;margin-bottom:4px;font-weight:600;">他サービスとの違い</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>観点</th><th>GitHub Copilot</th><th>ChatGPTなどの汎用AIチャット</th><th>Cursor / Devin などのコーディングエージェント</th></tr></thead>
+          <tbody>
+            <tr><td><strong>主戦場</strong></td><td>使い慣れたIDEの中</td><td>独立したチャット画面</td><td>専用エディタ／独立した実行環境</td></tr>
+            <tr><td><strong>得意なこと</strong></td><td>コーディング全般への特化支援</td><td>文章作成・アイデア出しなど汎用タスク</td><td>コードベース全体の自律的な編集・開発の自動化</td></tr>
+            <tr><td><strong>開発ワークフローとの連携</strong></td><td>Issue/PR/Actionsなど開発フロー全体と密接に統合</td><td>基本的になし</td><td>ツールにより異なる</td></tr>
+            <tr><td><strong>導入のハードル</strong></td><td>既存環境にプラグイン追加のみで低い</td><td>ブラウザで完結し低い</td><td>新しいエディタ・環境への移行が必要な場合がある</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight-box">
+        💡 「既存の開発環境に自然に溶け込む」ことがGitHub Copilotの最大の特色。新しいツールを覚える負担が少ない一方、GitHubのエコシステムを前提とした設計になっている
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑬ ルールとスキル -->
+  <div class="slide slide-content accent-purple" id="slide-13">
+    <div class="slide-header">
+      <div class="section-label">11 ─ Rules &amp; Skills</div>
+      <h2><span class="icon">📐</span>もう一歩進んだ概念：ルールとスキル</h2>
+    </div>
+    <div class="content-body">
+      <div class="two-col">
+        <div class="card">
+          <h3>ルール（Rules）とは</h3>
+          <ul>
+            <li>プロジェクトやチームの前提・規約をファイルに書いておき、AIエージェントに常に守らせる仕組み</li>
+            <li>毎回同じ説明をしなくても、AIが自動的にそのプロジェクトのルールに従って動くようになる</li>
+            <li>例：CLAUDE.md、.github/copilot-instructions.md、.cursor/rules</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>スキル（Skills）とは</h3>
+          <ul>
+            <li>よく使う作業手順をあらかじめテンプレート化し、必要なときに呼び出して再利用できる仕組み</li>
+            <li>「毎回同じ指示を書き直す」手間をなくし、チーム内で作業のやり方を統一できる</li>
+            <li>例：スラッシュコマンド、カスタムGPTs、Copilot拡張機能</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>概念</th><th>役割</th><th>具体例</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ルール（Rules）</strong></td><td>プロジェクト・チームの前提や規約をAIに常時適用させる</td><td>CLAUDE.md、copilot-instructions.md、.cursor/rules</td></tr>
+            <tr><td><strong>スキル（Skills）</strong></td><td>特定の作業手順をテンプレート化し、必要なときに呼び出す</td><td>スラッシュコマンド、カスタムGPTs、Copilot拡張機能</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight-box" style="background:#f2e9ff;border-left-color:#b28dff;color:#6b3fa0;">
+        💡 チーム全体で同じ基準・手順にそろえられ（属人化を防止）、繰り返し作業を効率化できる。AIエージェントに「何を守るべきか」「どう動くべきか」を事前に伝えておくことで、任せられる範囲が広がる
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑭ まとめ -->
+  <div class="slide slide-content accent-green" id="slide-14">
+    <div class="slide-header">
+      <div class="section-label">12 ─ Summary</div>
+      <h2><span class="icon">✅</span>まとめ</h2>
+    </div>
+    <div class="content-body">
+      <div class="numbered-list">
+        <div class="numbered-item">
+          <div class="num-badge">1</div>
+          <p>AIチャット＝1問1答の相談相手、AIエージェント＝目的達成まで自律的に動く実行者</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">2</div>
+          <p>AIエージェントはツールを使い、複数ステップを自分で計画・実行できる点が最大の違い</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">3</div>
+          <p>便利になる一方で、権限管理・ファクトチェック・情報漏洩対策など、任せきりにしない姿勢が重要</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">4</div>
+          <p>まずは小さなタスクから試し、少しずつ活用範囲を広げていくのがおすすめ</p>
+        </div>
+      </div>
+      <div class="highlight-box green" style="margin-top:14px;">
+        AIエージェントは「使ったことがないから難しそう」なものではなく、AIチャットの延長線上にある技術。<br>
+        今のうちに違いと注意点を理解しておくことで、今後の業務での活用がスムーズになる。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑮ 参考資料 -->
+  <div class="slide slide-content accent-blue" id="slide-15">
+    <div class="slide-header">
+      <div class="section-label">References</div>
+      <h2><span class="icon">📚</span>参考資料</h2>
+    </div>
+    <div class="content-body">
+      <div class="ref-list">
+        <div class="ref-item"><div class="ref-dot"></div>OpenAI — https://openai.com</div>
+        <div class="ref-item"><div class="ref-dot"></div>Anthropic — https://www.anthropic.com</div>
+        <div class="ref-item"><div class="ref-dot"></div>Anthropic Claude Code — https://www.anthropic.com/claude-code</div>
+        <div class="ref-item"><div class="ref-dot"></div>Cursor — https://www.cursor.com</div>
+        <div class="ref-item"><div class="ref-dot"></div>GitHub Copilot — https://github.com/features/copilot</div>
+        <div class="ref-item"><div class="ref-dot"></div>総務省「AI利活用ガイドライン」</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slides-wrapper -->
+
+<!-- ナビゲーション -->
+<div class="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>◀ 前へ</button>
+  <div class="dots" id="dots"></div>
+  <span class="slide-counter" id="counter">1 / 15</span>
+  <button id="nextBtn" onclick="changeSlide(1)">次へ ▶</button>
+</div>
+
+<script src="js/ai_beginner_guide.js"></script>
+</body>
+</html>

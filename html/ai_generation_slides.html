@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI生成 発表資料</title>
+<link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="slides-wrapper">
+
+  <!-- ① タイトル -->
+  <div class="slide slide-title active" id="slide-1">
+    <div class="main-title">AI生成</div>
+    <div class="subtitle">社員向け知識共有 ─ もう一歩進んだ活用へ</div>
+    <div class="tag">2026 ／ 社内発表資料</div>
+  </div>
+
+  <!-- ② 目次 -->
+  <div class="slide slide-content accent-blue" id="slide-2">
+    <div class="slide-header">
+      <div class="section-label">Index</div>
+      <h2><span class="icon">📋</span>目次</h2>
+    </div>
+    <div class="toc-grid">
+      <div class="toc-item" onclick="goTo(3)"><span class="toc-num">01</span><span class="toc-label">はじめに</span></div>
+      <div class="toc-item" onclick="goTo(4)"><span class="toc-num">02</span><span class="toc-label">AI生成とは</span></div>
+      <div class="toc-item" onclick="goTo(5)"><span class="toc-num">03</span><span class="toc-label">ChatGPT / Copilot をもう一歩活用する</span></div>
+      <div class="toc-item" onclick="goTo(6)"><span class="toc-num">04</span><span class="toc-label">主要AIツール比較 ＋ 選択ガイド</span></div>
+      <div class="toc-item" onclick="goTo(7)"><span class="toc-num">05</span><span class="toc-label">主な技術・手法</span></div>
+      <div class="toc-item" onclick="goTo(8)"><span class="toc-num">06</span><span class="toc-label">まとめ</span></div>
+      <div class="toc-item" onclick="goTo(9)"><span class="toc-num">07</span><span class="toc-label">ハンズオン 無料構成おすすめ</span></div>
+      <div class="toc-item" onclick="goTo(10)"><span class="toc-num">08</span><span class="toc-label">次回予告 ─ 開発者向けハンズオン</span></div>
+      <div class="toc-item" onclick="goTo(11)"><span class="toc-num">09</span><span class="toc-label">参考資料</span></div>
+    </div>
+  </div>
+
+  <!-- ③ はじめに -->
+  <div class="slide slide-content accent-teal" id="slide-3">
+    <div class="slide-header">
+      <div class="section-label">01 ─ Introduction</div>
+      <h2><span class="icon">👋</span>はじめに</h2>
+    </div>
+    <div class="content-body">
+      <div class="two-col">
+        <div class="card">
+          <h3>発表の目的</h3>
+          <ul>
+            <li>AI生成に関する知識をみんなで共有し、日々の業務に役立てるきっかけにする</li>
+            <li>「なんとなく使っている」から<br>「もう一歩踏み込んで使いこなす」ことを目指す</li>
+            <li>難しく考えすぎず、まずは身近なツールから試してみてほしい</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>背景・動機</h3>
+          <ul>
+            <li>ChatGPTやCopilotのWeb版はすでに広く使われていると思う</li>
+            <li>ただ「ちょっと質問する」「文章を直してもらう」程度で止まっていないか？</li>
+            <li>実はもっと幅広い使い方・ツールがあり、業務効率を大きく変えられる可能性がある</li>
+            <li>今日はそのきっかけとして、各ツールの特徴や得意なことを一緒に整理したい</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ AI生成とは -->
+  <div class="slide slide-content accent-green" id="slide-4">
+    <div class="slide-header">
+      <div class="section-label">02 ─ What is AI Generation</div>
+      <h2><span class="icon">🤖</span>AI生成とは</h2>
+    </div>
+    <div class="content-body">
+      <div class="highlight-box green">
+        AIが学習したデータをもとに、新たなコンテンツ（テキスト・画像・音声・動画・コードなど）を自律的に生成する技術の総称。<br>
+        従来の「検索・分類・予測」から <strong>「創造・生成」</strong> へとAIの役割が拡大。
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>領域</th><th>概要</th><th>代表的なツール</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>テキスト</strong></td><td>文章・コード・翻訳の生成</td><td>ChatGPT, Claude, Gemini</td></tr>
+            <tr><td><strong>画像</strong></td><td>イラスト・写真風画像の生成</td><td>Midjourney, DALL-E, Stable Diffusion</td></tr>
+            <tr><td><strong>音声</strong></td><td>声の合成・音楽生成</td><td>ElevenLabs, Suno</td></tr>
+            <tr><td><strong>動画</strong></td><td>映像・アニメーションの生成</td><td>Sora, Runway, Kling</td></tr>
+            <tr><td><strong>コード</strong></td><td>プログラムの自動生成・補完</td><td>GitHub Copilot, Cursor</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ ChatGPT / Copilot -->
+  <div class="slide slide-content accent-blue" id="slide-5">
+    <div class="slide-header">
+      <div class="section-label">03 ─ One Step Further</div>
+      <h2><span class="icon">🚀</span>ChatGPT / Copilot をもう一歩活用する</h2>
+    </div>
+    <div class="content-body">
+      <div class="two-col">
+        <div>
+          <div style="font-size:1.05rem;color:#00695c;margin-bottom:8px;font-weight:600;">ChatGPT の発展的な機能</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>機能</th><th>内容</th></tr></thead>
+              <tbody>
+                <tr><td><strong>カスタム指示</strong></td><td>役職・口調を事前登録し毎回説明不要に</td></tr>
+                <tr><td><strong>GPTs</strong></td><td>業務特化AIをノーコードで作成・共有</td></tr>
+                <tr><td><strong>ファイル分析</strong></td><td>Excel・PDFを添付してデータ分析・要約</td></tr>
+                <tr><td><strong>画像生成</strong></td><td>DALL-Eで資料イメージを生成</td></tr>
+                <tr><td><strong>プロジェクト機能</strong></td><td>複数チャットに共通の前提を持たせる</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:1.05rem;color:#00695c;margin-bottom:8px;font-weight:600;">Microsoft 365 Copilot 連携</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>連携先</th><th>できること</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Word</strong></td><td>草案作成・要約・書き直し</td></tr>
+                <tr><td><strong>Excel</strong></td><td>データ分析・グラフ提案・数式生成</td></tr>
+                <tr><td><strong>PowerPoint</strong></td><td>テキストからスライド自動生成</td></tr>
+                <tr><td><strong>Teams</strong></td><td>会議録音から議事録・アクション生成</td></tr>
+                <tr><td><strong>Outlook</strong></td><td>メール要約・返信文の自動提案</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        💡 Web版で「質問する」だけでなく、普段使っているOfficeアプリの中に組み込まれた機能を使うことで、より実務に直結した効率化ができる
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ AIツール比較（統合版） -->
+  <div class="slide slide-content accent-purple" id="slide-6">
+    <div class="slide-header">
+      <div class="section-label">04 ─ AI Tool Comparison</div>
+      <h2><span class="icon">⚖️</span>主要AIツール比較 ＋ 選択ガイド</h2>
+    </div>
+    <div class="content-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>ツール</th><th>種別</th><th>得意な作業</th><th>料金</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ChatGPT</strong></td>
+              <td><span class="badge badge-blue">チャット</span></td>
+              <td>汎用的な文章生成・アイデア出し・コード補助</td>
+              <td><span class="badge badge-green">Free あり</span> Plus $20/月</td>
+            </tr>
+            <tr>
+              <td><strong>Claude</strong></td>
+              <td><span class="badge badge-blue">チャット</span></td>
+              <td>長文の要約・分析・論理的な文章作成</td>
+              <td><span class="badge badge-green">Free あり</span> Pro $20/月</td>
+            </tr>
+            <tr>
+              <td><strong>Gemini</strong></td>
+              <td><span class="badge badge-blue">チャット</span></td>
+              <td>最新情報の取得・Google Workspace との連携</td>
+              <td><span class="badge badge-green">Free あり</span> Advanced $20/月</td>
+            </tr>
+            <tr>
+              <td><strong>Copilot</strong></td>
+              <td><span class="badge badge-blue">チャット</span></td>
+              <td>Word/Excel/Teams など Microsoft 365 業務の効率化</td>
+              <td><span class="badge badge-orange">M365 必要</span></td>
+            </tr>
+            <tr>
+              <td><strong>GitHub Copilot</strong></td>
+              <td><span class="badge badge-teal">コーディング</span></td>
+              <td>エディタ内でリアルタイムにコード補完・レビュー</td>
+              <td><span class="badge badge-green">Free あり</span> Pro $10/月</td>
+            </tr>
+            <tr>
+              <td><strong>Cursor</strong></td>
+              <td><span class="badge badge-teal">コーディング</span></td>
+              <td>ChatGPT感覚でコードベース全体を編集・リファクタ</td>
+              <td><span class="badge badge-green">Free あり</span> Pro $20/月</td>
+            </tr>
+            <tr>
+              <td><strong>Devin</strong></td>
+              <td><span class="badge badge-teal">コーディング</span></td>
+              <td>自律的にコードを書き・テストし・修正するAIエンジニア</td>
+              <td><span class="badge badge-purple">有料のみ</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:1.05rem;color:#00695c;margin-bottom:4px;font-weight:600;">ツール選択の目安</div>
+      <div class="code-block">
+        <div class="code-row"><span class="label">文章作成・要約・アイデア出し　　</span><span class="arrow"> →</span><span class="tool"> ChatGPT / Claude</span></div>
+        <div class="code-row"><span class="label">最新情報を調べたい　　　　　　　</span><span class="arrow"> →</span><span class="tool"> Gemini</span></div>
+        <div class="code-row"><span class="label">社内 Office 業務を効率化したい　</span><span class="arrow"> →</span><span class="tool"> Microsoft Copilot（M365）</span></div>
+        <div class="code-row"><span class="label">コーディングを助けてほしい　　　</span><span class="arrow"> →</span><span class="tool"> GitHub Copilot / Cursor</span></div>
+        <div class="code-row"><span class="label">長い文書・契約書を読み込みたい　</span><span class="arrow"> →</span><span class="tool"> Claude</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 主な技術・手法 -->
+  <div class="slide slide-content accent-teal" id="slide-7">
+    <div class="slide-header">
+      <div class="section-label">05 ─ Technology</div>
+      <h2><span class="icon">⚙️</span>主な技術・手法</h2>
+    </div>
+    <div class="content-body">
+      <div class="two-col">
+        <div class="card">
+          <h3>LLM（大規模言語モデル）</h3>
+          <ul>
+            <li>大量のテキストデータを学習した言語モデル</li>
+            <li>Transformer をベースに次のトークンを予測して文章を生成</li>
+            <li>GPT-4o / Claude 3 / Gemini</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>画像生成AI（Diffusion Model）</h3>
+          <ul>
+            <li>ノイズから徐々に画像を復元するプロセスで高品質な画像を生成</li>
+            <li>テキストプロンプトを与えることで意図した画像を出力</li>
+            <li>Stable Diffusion / Midjourney / DALL-E 3</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>音声・動画生成</h3>
+          <ul>
+            <li>音声合成（TTS）：テキストから自然な音声を生成</li>
+            <li>音楽生成：ジャンル・雰囲気を指定して楽曲を自動作成</li>
+            <li>動画生成：静止画や文章から短尺動画を生成（急速進化中）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>マルチモーダルAI</h3>
+          <ul>
+            <li>テキスト・画像・音声など複数の形式を同時に理解・生成</li>
+            <li>画像を見て説明文を生成、音声をテキスト化、等</li>
+            <li>GPT-4o / Gemini 1.5 Pro / Claude 3.5 Sonnet</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ まとめ -->
+  <div class="slide slide-content accent-green" id="slide-8">
+    <div class="slide-header">
+      <div class="section-label">06 ─ Summary</div>
+      <h2><span class="icon">✅</span>まとめ</h2>
+    </div>
+    <div class="content-body">
+      <div class="numbered-list">
+        <div class="numbered-item">
+          <div class="num-badge">1</div>
+          <p>ChatGPTやCopilotのWeb利用にとどまらず、各ツールの得意領域を知ることが大事</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">2</div>
+          <p>Microsoft 365連携・GPTs・ファイル分析など、すでに使えるもう一歩進んだ機能が多数ある</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">3</div>
+          <p>ツールによって特徴・得意な作業が異なるので、目的に合わせた使い分けが重要</p>
+        </div>
+        <div class="numbered-item">
+          <div class="num-badge">4</div>
+          <p>AIの回答は誤りがある場合も（ハルシネーション）。鵜呑みにせず必ずファクトチェックを</p>
+        </div>
+      </div>
+      <div class="highlight-box green" style="margin-top:14px;">
+        まずは今日紹介したツールや機能を <strong>一つでも試してみること</strong> から始めてみてほしい。<br>
+        技術は日々進化しているので、情報をキャッチアップしながら少しずつ活用の幅を広げていこう。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑨ ハンズオン勉強会 おすすめ無料構成 -->
+  <div class="slide slide-content accent-green" id="slide-9">
+    <div class="slide-header">
+      <div class="section-label">07 ─ Hands-on</div>
+      <h2><span class="icon">🎓</span>ハンズオン勉強会 おすすめ無料構成</h2>
+    </div>
+    <div class="content-body">
+      <div class="highlight-box green">
+        💡 <strong>おすすめ無料コンビ：ChatGPT Free ＋ Claude Free ＋ GitHub Copilot Free</strong><br>
+        アカウント登録のみで参加可能。スマホ・PC どちらでもブラウザから OK。
+      </div>
+      <div class="two-col">
+        <div>
+          <div style="font-size:1.05rem;color:#00695c;margin-bottom:8px;font-weight:600;">📅 勉強会プラン（例）</div>
+          <div class="numbered-list">
+            <div class="numbered-item">
+              <div class="num-badge">1</div>
+              <p><strong style="color:#2e7d32;">ChatGPT Free</strong>　文章作成・メール下書き・アイデア出しを体験</p>
+            </div>
+            <div class="numbered-item">
+              <div class="num-badge">2</div>
+              <p><strong style="color:#2e7d32;">Claude Free</strong>　長文資料の読み込み・分析・要約を体験</p>
+            </div>
+            <div class="numbered-item">
+              <div class="num-badge">3</div>
+              <p><strong style="color:#2e7d32;">ChatGPT ＋ Claude</strong>　実業務の課題で使い比べ・プロンプト工夫</p>
+            </div>
+            <div class="numbered-item">
+              <div class="num-badge">4</div>
+              <p><strong style="color:#2e7d32;">GitHub Copilot Free</strong>　VS Code でコーディング補助を体験（開発者向け）</p>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;gap:12px;">
+          <h3>💰 無料枠でできること</h3>
+          <div>
+            <div style="font-size:1.05rem;color:#2e7d32;font-weight:600;margin-bottom:4px;">ChatGPT Free（GPT-4o mini）</div>
+            <ul>
+              <li>チャット無制限（GPT-4o は 1 日上限あり）</li>
+              <li>ファイルアップロード・画像認識</li>
+              <li>GPTs（カスタム AI）の利用</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:1.05rem;color:#2e7d32;font-weight:600;margin-bottom:4px;">Claude Free</div>
+            <ul>
+              <li>1 日あたりのメッセージ数に上限あり</li>
+              <li>長文ドキュメントの読み込み・分析</li>
+              <li>ファイル添付・PDF の要約</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:1.05rem;color:#2e7d32;font-weight:600;margin-bottom:4px;">GitHub Copilot Free</div>
+            <ul>
+              <li>月 2,000 回のコード補完</li>
+              <li>月 50 回の AI チャット</li>
+              <li>VS Code / JetBrains で利用可能</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑩ 次回予告 ─ 開発者向けハンズオン -->
+  <div class="slide slide-content accent-indigo" id="slide-10">
+    <div class="slide-header">
+      <div class="section-label">08 ─ Developer Preview</div>
+      <h2><span class="icon">🛠️</span>次回予告 ─ 開発者向けハンズオン</h2>
+    </div>
+    <div class="content-body">
+      <div class="highlight-box" style="border-left-color:#7986cb;background:#eef0fb;color:#1a237e;">
+        🚀 <strong>Cursor &amp; Claude Code で始める本格 AI 開発</strong>（予定）<br>
+        コードを書きながら AI との協働開発を体験します。
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>🖥️ Cursor</h3>
+          <ul>
+            <li>AI ペアプログラマーとして動作するエディタ</li>
+            <li>自然言語でコード全体を編集・リファクタ</li>
+            <li>コンテキストを理解したコード補完・提案</li>
+            <li>コードレビュー・バグ修正の自動化</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>⚡ Claude Code</h3>
+          <ul>
+            <li>CLI で動く Anthropic 製コーディングエージェント</li>
+            <li>ファイル読み書き・コマンド実行を自律的に実行</li>
+            <li>プロジェクトルール（CLAUDE.md）で挙動を制御</li>
+            <li>カスタムスキル・フックで開発フローを自動化</li>
+          </ul>
+        </div>
+      </div>
+      <div style="font-size:1.05rem;color:#3949ab;margin-bottom:6px;font-weight:600;">📋 予定コンテンツ</div>
+      <div class="code-block" style="color:#1a237e;">
+        <div class="code-row"><span class="label" style="color:#3949ab;">① プロジェクトルール設定　</span><span class="arrow"> ─</span><span class="tool" style="color:#8e24aa;"> CLAUDE.md でチームルールを AI に覚えさせる</span></div>
+        <div class="code-row"><span class="label" style="color:#3949ab;">② カスタムスキル作成　　　</span><span class="arrow"> ─</span><span class="tool" style="color:#8e24aa;"> よく使う操作をスラッシュコマンドに登録する</span></div>
+        <div class="code-row"><span class="label" style="color:#3949ab;">③ 実際の開発体験　　　　　</span><span class="arrow"> ─</span><span class="tool" style="color:#8e24aa;"> Cursor + Claude Code で小規模アプリを作る</span></div>
+        <div class="code-row"><span class="label" style="color:#3949ab;">④ フック・自動化設定　　　</span><span class="arrow"> ─</span><span class="tool" style="color:#8e24aa;"> ファイル保存時の自動チェックなどを設定する</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑪ 参考資料 -->
+  <div class="slide slide-content accent-blue" id="slide-11">
+    <div class="slide-header">
+      <div class="section-label">References</div>
+      <h2><span class="icon">📚</span>参考資料</h2>
+    </div>
+    <div class="content-body">
+      <div class="ref-list">
+        <div class="ref-item"><div class="ref-dot"></div>OpenAI — https://openai.com</div>
+        <div class="ref-item"><div class="ref-dot"></div>Anthropic — https://www.anthropic.com</div>
+        <div class="ref-item"><div class="ref-dot"></div>Google DeepMind — https://deepmind.google</div>
+        <div class="ref-item"><div class="ref-dot"></div>Microsoft Copilot — https://copilot.microsoft.com</div>
+        <div class="ref-item"><div class="ref-dot"></div>GitHub Copilot — https://github.com/features/copilot</div>
+        <div class="ref-item"><div class="ref-dot"></div>Cursor — https://www.cursor.com</div>
+        <div class="ref-item"><div class="ref-dot"></div>総務省「AI利活用ガイドライン」</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slides-wrapper -->
+
+<!-- ナビゲーション -->
+<div class="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>◀ 前へ</button>
+  <div class="dots" id="dots"></div>
+  <span class="slide-counter" id="counter">1 / 11</span>
+  <button id="nextBtn" onclick="changeSlide(1)">次へ ▶</button>
+</div>
+
+<script src="js/slides.js"></script>
+</body>
+</html>
