@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="発表資料「AI生成」で使用した単語・用語の読み方と解説">
+<meta name="theme-color" content="#ffffff">
+<title>AI生成 用語集</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f8fafc;
+    --border: #e2e8f0;
+    --text: #1f2937;
+    --text-sub: #475569;
+    --text-muted: #64748b;
+    --accent: #1e88e5;
+    --accent-dark: #1565c0;
+    --accent-bg: #eaf2fb;
+    --c-basic: #1e88e5;
+    --c-chat: #00897b;
+    --c-media: #8e24aa;
+    --c-dev: #ef6c00;
+    --c-org: #546e7a;
+    --header-h: 52px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  a { color: var(--accent-dark); }
+
+  /* ── ヘッダー ── */
+  .page-header {
+    padding: 28px 16px 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f3f7fc 60%, #e8f1fb 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header .label {
+    font-size: .75rem;
+    letter-spacing: .18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .page-header h1 {
+    font-size: 1.6rem;
+    line-height: 1.4;
+    margin: 4px 0 8px;
+    background: linear-gradient(90deg, #1565c0, #00897b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .page-header p {
+    font-size: .92rem;
+    color: var(--text-sub);
+  }
+
+  /* ── カテゴリナビ（固定） ── */
+  .cat-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: var(--header-h);
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cat-nav::-webkit-scrollbar { display: none; }
+  .cat-nav a {
+    flex: 0 0 auto;
+    font-size: .85rem;
+    text-decoration: none;
+    color: var(--text-sub);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    white-space: nowrap;
+  }
+  .cat-nav a:active { background: var(--accent-bg); }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 16px 96px;
+  }
+
+  section, article { scroll-margin-top: calc(var(--header-h) + 12px); }
+
+  h2.section-title {
+    font-size: 1.3rem;
+    margin: 32px 0 14px;
+    padding-left: 12px;
+    border-left: 5px solid var(--cat, var(--accent));
+    line-height: 1.4;
+  }
+  h2.section-title small {
+    display: block;
+    font-size: .75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: .12em;
+  }
+
+  /* ── 目次 ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .cat-badge {
+    flex: 0 0 auto;
+    font-size: .72rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #fff;
+    background: var(--cat);
+    border-radius: 999px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+  .toc-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 14px 10px;
+  }
+  .toc-list h3 {
+    font-size: .85rem;
+    color: var(--text-muted);
+    letter-spacing: .08em;
+    margin: 12px 0 2px;
+  }
+  .toc-list ul { list-style: none; }
+  .toc-list li {
+    border-top: 1px dashed var(--border);
+    border-left: 4px solid var(--cat);
+  }
+  .toc-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 4px 9px 10px;
+    min-height: 48px;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .toc-list li a:active { background: var(--accent-bg); }
+  .toc-term {
+    font-weight: 600;
+    line-height: 1.45;
+    min-width: 0;
+  }
+  .toc-term .yomi {
+    display: block;
+    font-size: .78rem;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  /* ── 用語カード ── */
+  .term {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--cat);
+    border-radius: 10px;
+    padding: 16px 16px 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+  }
+  .term:target {
+    background: var(--accent-bg);
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, .25);
+  }
+  .term h3 {
+    font-size: 1.15rem;
+    line-height: 1.45;
+  }
+  .term .reading {
+    display: inline-block;
+    margin: 4px 0 10px;
+    font-size: .82rem;
+    color: var(--text-sub);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1px 8px;
+  }
+  .term .reading::before {
+    content: '読み';
+    font-weight: 700;
+    color: var(--cat);
+    margin-right: 6px;
+  }
+  .term p { font-size: .97rem; }
+  .term p + p { margin-top: 6px; }
+  .term ul {
+    margin: 6px 0 0 1.2em;
+    font-size: .95rem;
+  }
+  .term .meta {
+    margin-top: 10px;
+    font-size: .82rem;
+    color: var(--text-muted);
+  }
+  .term .meta b {
+    color: var(--text-sub);
+    font-weight: 600;
+  }
+  .term .meta a { text-decoration: none; }
+  .term .meta a::before { content: '→ '; }
+  .term .back {
+    display: block;
+    margin-top: 10px;
+    text-align: right;
+    font-size: .82rem;
+    text-decoration: none;
+    color: var(--text-muted);
+  }
+
+  /* カテゴリ色 */
+  .cat-basic { --cat: var(--c-basic); }
+  .cat-chat  { --cat: var(--c-chat); }
+  .cat-media { --cat: var(--c-media); }
+  .cat-dev   { --cat: var(--c-dev); }
+  .cat-org   { --cat: var(--c-org); }
+
+  /* ── 目次へ戻るボタン ── */
+  .to-toc {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 20;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: .72rem;
+    font-weight: 700;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(30, 136, 229, .35);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 16px 32px;
+    text-align: center;
+    font-size: .8rem;
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 640px) {
+    .page-header { padding: 40px 24px 28px; text-align: center; }
+    .page-header h1 { font-size: 2rem; }
+    .cat-nav { justify-content: center; }
+    main { padding: 0 24px 96px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="label">Glossary</div>
+  <h1>AI生成 用語集</h1>
+  <p>発表資料「AI生成」に出てきた単語・用語の読み方と解説です。目次から気になる用語をタップしてください。</p>
+</header>
+
+<nav class="cat-nav" aria-label="カテゴリ">
+  <a href="#toc">目次</a>
+  <a href="#cat-basic">基本用語</a>
+  <a href="#cat-chat">チャットAI</a>
+  <a href="#cat-media">画像・音声・動画</a>
+  <a href="#cat-dev">開発・コーディング</a>
+  <a href="#cat-org">企業・その他</a>
+</nav>
+
+<main>
+
+<!-- ═════════════ 目次 ═════════════ -->
+<section id="toc">
+  <h2 class="section-title">目次<small>INDEX</small></h2>
+
+  <div class="legend" aria-label="分類"><span class="cat-basic cat-badge">基本用語</span><span class="cat-chat cat-badge">チャットAI</span><span class="cat-media cat-badge">画像・音声・動画</span><span class="cat-dev cat-badge">開発</span><span class="cat-org cat-badge">企業・その他</span></div>
+
+  <div class="toc-list">
+    <h3>英字（A–Z）</h3>
+    <ul>
+      <li class="cat-dev"><a href="#agent"><span class="toc-term">AIエージェント<span class="yomi">エーアイエージェント</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-org"><a href="#guideline"><span class="toc-term">AI利活用ガイドライン<span class="yomi">エーアイりかつようガイドライン</span></span><span class="cat-badge">企業・その他</span></a></li>
+      <li class="cat-org"><a href="#anthropic"><span class="toc-term">Anthropic<span class="yomi">アンソロピック</span></span><span class="cat-badge">企業・その他</span></a></li>
+      <li class="cat-chat"><a href="#chatgpt"><span class="toc-term">ChatGPT<span class="yomi">チャットジーピーティー</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-chat"><a href="#claude"><span class="toc-term">Claude<span class="yomi">クロード</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-dev"><a href="#claude-code"><span class="toc-term">Claude Code<span class="yomi">クロード・コード</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-dev"><a href="#claude-md"><span class="toc-term">CLAUDE.md<span class="yomi">クロード・エムディー</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-dev"><a href="#cli"><span class="toc-term">CLI<span class="yomi">シーエルアイ</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-dev"><a href="#cursor"><span class="toc-term">Cursor<span class="yomi">カーソル</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-media"><a href="#dalle"><span class="toc-term">DALL-E<span class="yomi">ダリ</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-dev"><a href="#devin"><span class="toc-term">Devin<span class="yomi">デビン</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-media"><a href="#elevenlabs"><span class="toc-term">ElevenLabs<span class="yomi">イレブンラボ</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-chat"><a href="#gemini"><span class="toc-term">Gemini<span class="yomi">ジェミニ</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-dev"><a href="#github-copilot"><span class="toc-term">GitHub Copilot<span class="yomi">ギットハブ・コパイロット</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-org"><a href="#deepmind"><span class="toc-term">Google DeepMind<span class="yomi">グーグル・ディープマインド</span></span><span class="cat-badge">企業・その他</span></a></li>
+      <li class="cat-chat"><a href="#gpt-4o"><span class="toc-term">GPT-4o / GPT-4o mini<span class="yomi">ジーピーティー・フォー・オー</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-chat"><a href="#gpts"><span class="toc-term">GPTs<span class="yomi">ジーピーティーズ</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-dev"><a href="#jetbrains"><span class="toc-term">JetBrains<span class="yomi">ジェットブレインズ</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-media"><a href="#kling"><span class="toc-term">Kling<span class="yomi">クリング</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-basic"><a href="#llm"><span class="toc-term">LLM（大規模言語モデル）<span class="yomi">エルエルエム</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-dev"><a href="#markdown"><span class="toc-term">Markdown<span class="yomi">マークダウン</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-chat"><a href="#copilot"><span class="toc-term">Microsoft Copilot<span class="yomi">マイクロソフト・コパイロット</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-media"><a href="#midjourney"><span class="toc-term">Midjourney<span class="yomi">ミッドジャーニー</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-org"><a href="#openai"><span class="toc-term">OpenAI<span class="yomi">オープンエーアイ</span></span><span class="cat-badge">企業・その他</span></a></li>
+      <li class="cat-media"><a href="#runway"><span class="toc-term">Runway<span class="yomi">ランウェイ</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-media"><a href="#sora"><span class="toc-term">Sora<span class="yomi">ソラ</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-media"><a href="#stable-diffusion"><span class="toc-term">Stable Diffusion<span class="yomi">ステーブル・ディフュージョン</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-media"><a href="#suno"><span class="toc-term">Suno<span class="yomi">スーノ</span></span><span class="cat-badge">画像・音声・動画</span></a></li>
+      <li class="cat-basic"><a href="#transformer"><span class="toc-term">Transformer<span class="yomi">トランスフォーマー</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-dev"><a href="#vscode"><span class="toc-term">VS Code<span class="yomi">ブイエス・コード</span></span><span class="cat-badge">開発</span></a></li>
+    </ul>
+    <h3>日本語（あ–ん）</h3>
+    <ul>
+      <li class="cat-dev"><a href="#editor"><span class="toc-term">エディタ<span class="yomi">エディタ</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-basic"><a href="#tts"><span class="toc-term">音声合成（TTS）<span class="yomi">おんせいごうせい</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-basic"><a href="#diffusion"><span class="toc-term">拡散モデル（Diffusion Model）<span class="yomi">かくさんモデル</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-chat"><a href="#custom-instructions"><span class="toc-term">カスタム指示<span class="yomi">カスタムしじ</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-dev"><a href="#skill"><span class="toc-term">カスタムスキル<span class="yomi">カスタムスキル</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-org"><a href="#catch-up"><span class="toc-term">キャッチアップ<span class="yomi">キャッチアップ</span></span><span class="cat-badge">企業・その他</span></a></li>
+      <li class="cat-dev"><a href="#codebase"><span class="toc-term">コードベース<span class="yomi">コードベース</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-dev"><a href="#completion"><span class="toc-term">コード補完<span class="yomi">コードほかん</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-dev"><a href="#slash-command"><span class="toc-term">スラッシュコマンド<span class="yomi">スラッシュコマンド</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-basic"><a href="#generative-ai"><span class="toc-term">生成AI（AI生成）<span class="yomi">せいせいエーアイ</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-basic"><a href="#token"><span class="toc-term">トークン<span class="yomi">トークン</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-basic"><a href="#nocode"><span class="toc-term">ノーコード<span class="yomi">ノーコード</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-basic"><a href="#hallucination"><span class="toc-term">ハルシネーション<span class="yomi">ハルシネーション</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-org"><a href="#hands-on"><span class="toc-term">ハンズオン<span class="yomi">ハンズオン</span></span><span class="cat-badge">企業・その他</span></a></li>
+      <li class="cat-basic"><a href="#factcheck"><span class="toc-term">ファクトチェック<span class="yomi">ファクトチェック</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-dev"><a href="#hook"><span class="toc-term">フック<span class="yomi">フック</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-chat"><a href="#project"><span class="toc-term">プロジェクト機能<span class="yomi">プロジェクトきのう</span></span><span class="cat-badge">チャットAI</span></a></li>
+      <li class="cat-basic"><a href="#prompt"><span class="toc-term">プロンプト<span class="yomi">プロンプト</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-dev"><a href="#pair-programmer"><span class="toc-term">ペアプログラマー<span class="yomi">ペアプログラマー</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-basic"><a href="#multimodal"><span class="toc-term">マルチモーダルAI<span class="yomi">マルチモーダルエーアイ</span></span><span class="cat-badge">基本用語</span></a></li>
+      <li class="cat-dev"><a href="#refactor"><span class="toc-term">リファクタ（リファクタリング）<span class="yomi">リファクタ</span></span><span class="cat-badge">開発</span></a></li>
+      <li class="cat-chat"><a href="#plans"><span class="toc-term">料金プラン（Free / Plus / Pro / Advanced）<span class="yomi">りょうきんプラン</span></span><span class="cat-badge">チャットAI</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════════ 基本用語 ═════════════ -->
+<section id="cat-basic" class="cat-basic">
+  <h2 class="section-title">基本用語<small>BASICS</small></h2>
+
+  <article class="term" id="generative-ai">
+    <h3>生成AI（AI生成）</h3>
+    <span class="reading">せいせいエーアイ（エーアイせいせい）</span>
+    <p>AIが学習したデータをもとに、文章・画像・音声・動画・プログラムなどの<strong>新しいコンテンツを作り出す技術</strong>の総称です。</p>
+    <p>従来のAIが得意だった「検索・分類・予測」に加えて、「創造・生成」までできるようになったことが大きな変化です。</p>
+    <div class="meta"><b>関連：</b><a href="#llm">LLM</a>　<a href="#diffusion">拡散モデル</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="llm">
+    <h3>LLM（大規模言語モデル）</h3>
+    <span class="reading">エルエルエム（だいきぼげんごモデル）</span>
+    <p>Large Language Model の略。<strong>大量の文章を学習し、人間のように文章を理解・作成できるAIモデル</strong>です。ChatGPT・Claude・Gemini などの中核にあたります。</p>
+    <p>文章の続きとして「次に来そうな<a href="#token">トークン</a>」を予測し、それを繰り返すことで文章を組み立てます。</p>
+    <div class="meta"><b>関連：</b><a href="#transformer">Transformer</a>　<a href="#token">トークン</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="transformer">
+    <h3>Transformer</h3>
+    <span class="reading">トランスフォーマー</span>
+    <p>2017年に Google の研究者らが発表した、AIの基本的な仕組み（アーキテクチャ）です。文中の言葉同士の関係を「注意（Attention）」という仕組みで捉えるのが特徴です。</p>
+    <p>現在の多くの<a href="#llm">LLM</a>がこの仕組みを土台にしています。ChatGPT の「GPT」の「T」も Transformer の頭文字です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="token">
+    <h3>トークン</h3>
+    <span class="reading">トークン</span>
+    <p>AIが文章を処理するときの<strong>最小単位</strong>です。単語や文字の一部に相当し、日本語ではおおむね1文字前後が1トークンになります。</p>
+    <p>AIが一度に読める文章量の上限や、API利用時の料金もトークン数で数えるのが一般的です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="prompt">
+    <h3>プロンプト</h3>
+    <span class="reading">プロンプト</span>
+    <p>AIに対する<strong>指示文・質問文</strong>のことです。目的・前提・出力形式などを具体的に書くほど、期待に近い回答が得られやすくなります。</p>
+    <p>画像生成AIに「どんな絵を描いてほしいか」を文章で伝えるものを「テキストプロンプト」と呼びます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="diffusion">
+    <h3>拡散モデル（Diffusion Model）</h3>
+    <span class="reading">かくさんモデル（ディフュージョンモデル）</span>
+    <p>ノイズ（砂嵐のような画像）から<strong>少しずつノイズを取り除いて画像を浮かび上がらせる</strong>方式の生成モデルです。現在の画像生成AIの主流の方式です。</p>
+    <div class="meta"><b>代表例：</b><a href="#stable-diffusion">Stable Diffusion</a>　<a href="#midjourney">Midjourney</a>　<a href="#dalle">DALL-E</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="multimodal">
+    <h3>マルチモーダルAI</h3>
+    <span class="reading">マルチモーダルエーアイ</span>
+    <p>テキスト・画像・音声など、<strong>複数の種類（モーダル）の情報をまとめて理解・生成できるAI</strong>です。</p>
+    <p>例：写真を見て説明文を書く、音声を聞いて文字に起こす、など。</p>
+    <div class="meta"><b>代表例：</b><a href="#gpt-4o">GPT-4o</a>　<a href="#gemini">Gemini</a>　<a href="#claude">Claude</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="tts">
+    <h3>音声合成（TTS）</h3>
+    <span class="reading">おんせいごうせい（ティーティーエス）</span>
+    <p>TTS は Text-to-Speech の略。<strong>テキストを自然な音声に変換する技術</strong>です。ナレーション作成や読み上げなどに使われます。</p>
+    <div class="meta"><b>代表例：</b><a href="#elevenlabs">ElevenLabs</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="hallucination">
+    <h3>ハルシネーション</h3>
+    <span class="reading">ハルシネーション</span>
+    <p>英語で「幻覚」の意味。AIが<strong>事実と異なる内容を、もっともらしく回答してしまう現象</strong>です。存在しない資料や数値を作り出すこともあります。</p>
+    <p>AIの回答は鵜呑みにせず、<a href="#factcheck">ファクトチェック</a>することが大切です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="factcheck">
+    <h3>ファクトチェック</h3>
+    <span class="reading">ファクトチェック</span>
+    <p>情報が<strong>事実かどうかを確認・検証すること</strong>です。AIの回答は、公式サイトや一次情報で裏付けを取ってから使いましょう。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="nocode">
+    <h3>ノーコード</h3>
+    <span class="reading">ノーコード</span>
+    <p>プログラムを書かずに、<strong>画面操作だけでアプリや仕組みを作ること</strong>です。ChatGPT の <a href="#gpts">GPTs</a> はノーコードで作成できます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+</section>
+
+<!-- ═════════════ チャットAI・機能 ═════════════ -->
+<section id="cat-chat" class="cat-chat">
+  <h2 class="section-title">チャットAI・機能<small>CHAT AI</small></h2>
+
+  <article class="term" id="chatgpt">
+    <h3>ChatGPT</h3>
+    <span class="reading">チャットジーピーティー</span>
+    <p><a href="#openai">OpenAI</a> が提供する対話型AIです。文章作成・アイデア出し・コード補助など、幅広い用途に使える汎用的なツールです。</p>
+    <p>GPT は Generative Pre-trained Transformer（事前学習済みの生成型<a href="#transformer">Transformer</a>）の略です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="gpt-4o">
+    <h3>GPT-4o / GPT-4o mini</h3>
+    <span class="reading">ジーピーティー・フォー・オー ／ ジーピーティー・フォー・オー・ミニ</span>
+    <p>ChatGPT で使われている OpenAI のAIモデルの名前です。「o」は omni（あらゆる）の意味で、文章・画像・音声を扱える<a href="#multimodal">マルチモーダル</a>なモデルです。</p>
+    <p>「mini」は軽量版で、発表資料では ChatGPT 無料版の主なモデルとして紹介しています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="claude">
+    <h3>Claude</h3>
+    <span class="reading">クロード</span>
+    <p><a href="#anthropic">Anthropic</a> が提供する対話型AIです。<strong>長い文書の読み込み・要約・分析や、論理的な文章作成</strong>が得意です。</p>
+    <p>資料中の「Claude 3」「Claude 3.5 Sonnet（ソネット）」はモデルの世代・種類を表す名前です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="gemini">
+    <h3>Gemini</h3>
+    <span class="reading">ジェミニ</span>
+    <p>Google が提供する対話型AIです。Google 検索を生かした<strong>最新情報の取得</strong>や、Google Workspace との連携が強みです。</p>
+    <p>「Gemini 1.5 Pro」はモデルの名前です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="copilot">
+    <h3>Microsoft Copilot</h3>
+    <span class="reading">マイクロソフト・コパイロット</span>
+    <p>Microsoft が提供するAIアシスタントです。Copilot は「副操縦士」の意味。Web版に加え、Microsoft 365 の Word・Excel・Teams などに組み込まれて使えるのが特徴です。</p>
+    <div class="meta"><b>関連：</b><a href="#github-copilot">GitHub Copilot</a>（開発者向けの別製品）</div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="custom-instructions">
+    <h3>カスタム指示</h3>
+    <span class="reading">カスタムしじ</span>
+    <p>ChatGPT に、<strong>自分の役職・口調・よく使う出力形式などを事前に登録しておく機能</strong>です。毎回同じ説明をしなくても、好みに合った回答が返ってきます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="gpts">
+    <h3>GPTs</h3>
+    <span class="reading">ジーピーティーズ</span>
+    <p>ChatGPT 上で、<strong>特定の業務に特化したオリジナルのAIを作成・共有できる機能</strong>です。指示や参考資料を設定するだけで、<a href="#nocode">ノーコード</a>で作れます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="project">
+    <h3>プロジェクト機能</h3>
+    <span class="reading">プロジェクトきのう</span>
+    <p>複数のチャットを1つのプロジェクトにまとめ、<strong>共通の前提や資料を持たせられる機能</strong>です。案件ごとに情報を整理したいときに便利です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="plans">
+    <h3>料金プラン（Free / Plus / Pro / Advanced）</h3>
+    <span class="reading">りょうきんプラン（フリー / プラス / プロ / アドバンスト）</span>
+    <p>Free は無料プラン、Plus・Pro・Advanced はサービスごとの有料プランの名前です。有料プランでは、高性能モデルの利用回数や機能が拡張されます。</p>
+    <p>※ 料金や無料枠の内容は変更されることがあります。最新情報は各公式サイトで確認してください。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+</section>
+
+
+<!-- ═════════════ 画像・音声・動画生成AI ═════════════ -->
+<section id="cat-media" class="cat-media">
+  <h2 class="section-title">画像・音声・動画生成AI<small>MEDIA GENERATION</small></h2>
+
+  <article class="term" id="midjourney">
+    <h3>Midjourney</h3>
+    <span class="reading">ミッドジャーニー</span>
+    <p>テキストから画像を生成するAIサービスです。<strong>芸術性の高いイラストや写真風の画像</strong>に定評があります。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="dalle">
+    <h3>DALL-E（DALL-E 3）</h3>
+    <span class="reading">ダリ（ダリ・スリー）</span>
+    <p><a href="#openai">OpenAI</a> の画像生成AIです。ChatGPT から文章で指示するだけで画像を作れるため、資料のイメージ作成などに活用できます。</p>
+    <p>名前は画家サルバドール・ダリと映画「WALL-E（ウォーリー）」に由来します。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="stable-diffusion">
+    <h3>Stable Diffusion</h3>
+    <span class="reading">ステーブル・ディフュージョン</span>
+    <p>Stability AI などが公開した画像生成モデルです。モデルが一般に公開されているため、<strong>自分のPCで動かしたり、カスタマイズしたり</strong>できるのが特徴です。</p>
+    <div class="meta"><b>関連：</b><a href="#diffusion">拡散モデル</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="elevenlabs">
+    <h3>ElevenLabs</h3>
+    <span class="reading">イレブンラボ（イレブンラブズ）</span>
+    <p>自然な読み上げ音声を作れる<a href="#tts">音声合成</a>AIサービスです。多言語のナレーション作成や、声の再現などに対応しています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="suno">
+    <h3>Suno</h3>
+    <span class="reading">スーノ</span>
+    <p>ジャンルや雰囲気、歌詞を指定するだけで、<strong>歌入りの楽曲を自動生成</strong>できる音楽生成AIです。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="sora">
+    <h3>Sora</h3>
+    <span class="reading">ソラ</span>
+    <p><a href="#openai">OpenAI</a> の動画生成AIです。文章や画像から短い動画を生成できます。名前は日本語の「空」に由来するとされています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="runway">
+    <h3>Runway</h3>
+    <span class="reading">ランウェイ</span>
+    <p>動画の生成・編集をAIで行えるサービスです。映像制作の現場でも使われています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="kling">
+    <h3>Kling</h3>
+    <span class="reading">クリング</span>
+    <p>中国の快手（Kuaishou／クワイショウ）が開発した動画生成AIです。文章や画像から、動きの自然な動画を生成できます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+</section>
+
+<!-- ═════════════ 開発・コーディング ═════════════ -->
+<section id="cat-dev" class="cat-dev">
+  <h2 class="section-title">開発・コーディング<small>DEVELOPMENT</small></h2>
+
+  <article class="term" id="github-copilot">
+    <h3>GitHub Copilot</h3>
+    <span class="reading">ギットハブ・コパイロット</span>
+    <p>GitHub（Microsoft 傘下）が提供する、<strong>プログラミング支援AI</strong>です。<a href="#editor">エディタ</a>の中で、書きかけのコードの続きを提案（<a href="#completion">コード補完</a>）したり、チャットで質問に答えたりします。</p>
+    <p>無料版でも、発表資料時点で月2,000回のコード補完・月50回のAIチャットが使えます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="cursor">
+    <h3>Cursor</h3>
+    <span class="reading">カーソル</span>
+    <p>AI機能を深く組み込んだ<a href="#editor">コードエディタ</a>です。<a href="#vscode">VS Code</a> をベースにしており、チャット感覚で<a href="#codebase">コードベース</a>全体の編集や<a href="#refactor">リファクタ</a>ができます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="devin">
+    <h3>Devin</h3>
+    <span class="reading">デビン</span>
+    <p>Cognition 社が開発した「AIソフトウェアエンジニア」です。指示を受けると、<strong>自律的にコードを書き・テストし・修正する</strong>ところまで行います。</p>
+    <div class="meta"><b>関連：</b><a href="#agent">AIエージェント</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="claude-code">
+    <h3>Claude Code</h3>
+    <span class="reading">クロード・コード</span>
+    <p><a href="#anthropic">Anthropic</a> 製の<a href="#agent">コーディングエージェント</a>です。<a href="#cli">CLI</a>（ターミナル）などで動き、ファイルの読み書きやコマンド実行をしながら開発を進めます。</p>
+    <p><a href="#claude-md">CLAUDE.md</a> でプロジェクトのルールを伝えたり、<a href="#skill">スキル</a>や<a href="#hook">フック</a>で動きをカスタマイズしたりできます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="vscode">
+    <h3>VS Code（Visual Studio Code）</h3>
+    <span class="reading">ブイエス・コード（ビジュアル・スタジオ・コード）</span>
+    <p>Microsoft が提供する無料の<a href="#editor">コードエディタ</a>です。拡張機能が豊富で、GitHub Copilot も拡張機能として利用できます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="jetbrains">
+    <h3>JetBrains</h3>
+    <span class="reading">ジェットブレインズ</span>
+    <p>IntelliJ IDEA・PyCharm などの開発ツール（IDE）を提供している会社です。これらのツールでも GitHub Copilot を利用できます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="editor">
+    <h3>エディタ（コードエディタ）</h3>
+    <span class="reading">エディタ</span>
+    <p>プログラムを書くためのソフトウェアです。色分け表示や入力補助など、コードを書きやすくする機能を備えています。より多機能なものは IDE（アイディーイー／統合開発環境）と呼ばれます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="completion">
+    <h3>コード補完</h3>
+    <span class="reading">コードほかん</span>
+    <p>書きかけのコードから、<strong>続きを予測して自動で提案してくれる機能</strong>です。スマホの予測変換のプログラム版のようなものです。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="codebase">
+    <h3>コードベース</h3>
+    <span class="reading">コードベース</span>
+    <p>1つのプロジェクトを構成する<strong>ソースコード全体</strong>のことです。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="refactor">
+    <h3>リファクタ（リファクタリング）</h3>
+    <span class="reading">リファクタ（リファクタリング）</span>
+    <p>プログラムの<strong>動きは変えずに、中身を読みやすく・直しやすく整理すること</strong>です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="cli">
+    <h3>CLI</h3>
+    <span class="reading">シーエルアイ</span>
+    <p>Command Line Interface の略。マウスではなく、<strong>黒い画面（ターミナル）に文字でコマンドを入力して操作する方式</strong>です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="agent">
+    <h3>AIエージェント（コーディングエージェント）</h3>
+    <span class="reading">エーアイエージェント</span>
+    <p>質問に答えるだけでなく、目的に向けて<strong>自分で計画を立て、ツールを使って作業し、結果を確認する</strong>ところまで自律的に進めるAIです。プログラミング向けのものをコーディングエージェントと呼びます。</p>
+    <div class="meta"><b>代表例：</b><a href="#claude-code">Claude Code</a>　<a href="#devin">Devin</a></div>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="pair-programmer">
+    <h3>ペアプログラマー</h3>
+    <span class="reading">ペアプログラマー</span>
+    <p>2人1組でプログラムを書く「ペアプログラミング」の相方のことです。AIがその相方役として、隣で提案やレビューをしてくれるイメージです。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="claude-md">
+    <h3>CLAUDE.md</h3>
+    <span class="reading">クロード・エムディー</span>
+    <p><a href="#claude-code">Claude Code</a> が作業開始時に読み込む、<strong>プロジェクトのルールや前提を書いておくファイル</strong>です。チームのルールをAIに覚えさせることができます。</p>
+    <p>「.md」は <a href="#markdown">Markdown</a> 形式のファイルであることを表します。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="markdown">
+    <h3>Markdown</h3>
+    <span class="reading">マークダウン</span>
+    <p>「#」で見出し、「-」で箇条書きのように、<strong>簡単な記号で文章の構造を表す書き方</strong>です。拡張子は「.md」。発表資料の原稿もこの形式で書かれています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="skill">
+    <h3>カスタムスキル</h3>
+    <span class="reading">カスタムスキル</span>
+    <p>よく使う作業手順や指示をまとめて登録しておき、<strong>必要なときに呼び出せるようにしたもの</strong>です。Claude Code では<a href="#slash-command">スラッシュコマンド</a>として呼び出せます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="slash-command">
+    <h3>スラッシュコマンド</h3>
+    <span class="reading">スラッシュコマンド</span>
+    <p>「/review」のように、<strong>「/（スラッシュ）」から始まる短い命令</strong>です。入力するだけで登録済みの操作を実行できます。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="hook">
+    <h3>フック</h3>
+    <span class="reading">フック</span>
+    <p>「ファイルを保存したとき」など<strong>特定のタイミングで、自動的に処理を実行する仕組み</strong>です。自動チェックや通知などに使います。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+</section>
+
+<!-- ═════════════ 企業・その他 ═════════════ -->
+<section id="cat-org" class="cat-org">
+  <h2 class="section-title">企業・その他<small>OTHERS</small></h2>
+
+  <article class="term" id="openai">
+    <h3>OpenAI</h3>
+    <span class="reading">オープンエーアイ</span>
+    <p>アメリカのAI研究・開発企業です。<a href="#chatgpt">ChatGPT</a>・<a href="#dalle">DALL-E</a>・<a href="#sora">Sora</a> などを提供しています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="anthropic">
+    <h3>Anthropic</h3>
+    <span class="reading">アンソロピック</span>
+    <p>アメリカのAI研究・開発企業です。AIの安全性研究に力を入れており、<a href="#claude">Claude</a>・<a href="#claude-code">Claude Code</a> を提供しています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="deepmind">
+    <h3>Google DeepMind</h3>
+    <span class="reading">グーグル・ディープマインド</span>
+    <p>Google のAI研究部門です。<a href="#gemini">Gemini</a> の開発を担っています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="guideline">
+    <h3>AI利活用ガイドライン（総務省）</h3>
+    <span class="reading">エーアイりかつようガイドライン（そうむしょう）</span>
+    <p>総務省の有識者会議がまとめた、<strong>AIを利用する人・組織が気をつけるべきこと</strong>を整理した指針です。適正な利用、プライバシー、セキュリティなどへの配慮が示されています。</p>
+    <p>現在は、経済産業省と共同でまとめた「AI事業者ガイドライン」に内容が引き継がれています。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="hands-on">
+    <h3>ハンズオン</h3>
+    <span class="reading">ハンズオン</span>
+    <p>説明を聞くだけでなく、<strong>実際に手を動かしながら学ぶ形式</strong>の勉強会や研修のことです。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+
+  <article class="term" id="catch-up">
+    <h3>キャッチアップ</h3>
+    <span class="reading">キャッチアップ</span>
+    <p>新しい情報や技術に<strong>追いつくこと・把握し続けること</strong>です。AIは変化が速いため、継続的なキャッチアップが大切です。</p>
+    <a class="back" href="#toc">▲ 目次へ戻る</a>
+  </article>
+</section>
+
+</main>
+
+<a class="to-toc" href="#toc" aria-label="目次へ戻る">▲<br>目次</a>
+
+<footer>
+  AI生成 発表資料 用語集<br>
+  ※ サービスの内容・料金は発表資料作成時点のものです。
+</footer>
+
+</body>
+</html>
